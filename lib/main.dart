@@ -334,6 +334,8 @@ class _AnaSayfaState extends State<AnaSayfa> {
       tz.TZDateTime.from(scheduledDate, tz.local),
       details,
       androidScheduleMode: AndroidScheduleMode.exactAllowWhileIdle,
+      uiLocalNotificationDateInterpretation:
+          UILocalNotificationDateInterpretation.absoluteTime,
       matchDateTimeComponents: DateTimeComponents.time,
     );
   }
@@ -653,7 +655,8 @@ class _AnaSayfaState extends State<AnaSayfa> {
     final List<Map<String, dynamic>> sonuc = [];
     final keys = prefs.getKeys().where((k) => k.startsWith('ilaclar_'));
 
-    for (final key in keys.toList()..sort().reversed.take(30)) {
+    final sortedKeys = keys.toList()..sort();
+    for (final key in sortedKeys.reversed.take(30)) {
       final tarih = key.replaceFirst('ilaclar_', '');
       final String? json = prefs.getString(key);
       if (json != null) {
